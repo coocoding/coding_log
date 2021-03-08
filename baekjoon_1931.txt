@@ -1,0 +1,38 @@
+#include<iostream>
+#include<algorithm> 
+#include<vector>
+using namespace std;
+
+bool compare(pair<int, int> a, pair<int, int> b) {
+	if (a.second<b.second)
+		return true;
+    else if (a.second>b.second)
+		return false;
+    else 
+        return a.first<b.first;
+}
+int main() {
+	int N;
+
+	vector <pair<int, int>> time;
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		int num1, num2;
+		cin >> num1 >> num2;
+		time.push_back(make_pair(num1, num2));
+	}
+
+	sort(time.begin(), time.end(), compare);
+
+	int count = 0;
+	int n = 0;
+	for (int i = 0; i < N; i++) {
+		if (time[i].first >= n) {
+			n = time[i].second;
+			count++;
+		}
+	}
+
+	cout << count << endl;
+}
