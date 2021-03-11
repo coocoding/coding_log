@@ -1,0 +1,37 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<long long> road;
+	vector<long long> oil;
+
+	for (int i = 0; i < n - 1; i++) {
+		int n;
+		cin >> n;
+		road.push_back(n);
+	}
+
+	for (int i = 0; i < n; i++) {
+		int temp;
+		cin >> temp;
+		oil.push_back(temp);
+	}
+	
+
+	long long result = road[0] * oil[0];
+	long long min = oil[0];
+	for (int i = 1; i < n-1; i++) {
+		if (oil[i] < min) {
+			min = oil[i];
+		}
+		result += road[i] * min;
+	}
+		
+
+	cout << result << endl;
+	
+}
