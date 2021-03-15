@@ -1,0 +1,58 @@
+#include<iostream>
+#include<queue>
+#include<algorithm>
+using namespace std;
+
+
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+int main(){
+	int t;
+	vector<int> temp;
+	cin >> t;
+	for (int i = 0; i < t; i++) {
+		int m, n, k; 
+		int board[52][52] = { 0, };
+		int visit[52][52] = { 0, };
+		
+		cin >> m >> n >> k;
+		for (int j = 0; j < k; j++) {
+			int num1, num2;
+			cin >> num1 >> num2;
+			board[num1][num2] = 1;
+		}
+		
+	
+		int num = 0;
+		queue<pair<int,int>> Q;
+		for (int n1 = 0; n1 < m; n1++) {
+			for (int n2 = 0; n2 < n; n2++) {
+				if (visit[n1][n2] || board[n1][n2] == 0) continue;
+				num++;
+				visit[n1][n2] = 1;
+				Q.push({ n1,n2 });
+				while (!Q.empty()) {
+					pair<int, int> cur = Q.front();
+					Q.pop();
+					for (int dir = 0; dir < 4; dir++) {
+						int nx = cur.first + dx[dir];
+						int ny = cur.second + dy[dir];
+
+						if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
+						if (visit[nx][ny] || board[nx][ny]==0) continue;
+
+						visit[nx][ny] = 1;
+						Q.push({ nx,ny });
+					}
+				}
+
+			}
+		}
+		temp.push_back(num);
+	}
+
+	for (int i = 0; i < temp.size(); i++) {
+		cout << temp[i] << endl;
+	}
+}
