@@ -1,0 +1,68 @@
+#include<iostream>
+#include<queue>
+#include<algorithm>
+#include<tuple>
+using namespace std;
+
+int board[101][101][101];
+int dist[101][101][101];
+int dx[6] = { -1,1,0,0,0,0};
+int dy[6] = { 0,0,-1,1,0,0 };
+int dz[6] = { 0,0,0,0,-1,1 };
+
+int main() {
+	int h, m, n;
+	cin >> m >> n>>h;
+	queue<tuple<int,int,int>> T;
+	
+
+	for (int i = 0; i < h; i++)
+		for (int j = 0; j < n; j++) 
+			for (int k = 0; k < m; k++) {
+				cin >> board[i][j][k];
+				if (board[i][j][k] == 1)
+					T.push({ i,j,k });
+				if (board[i][j][k] == 0)
+					dist[i][j][k] = -1;
+			}
+		
+	
+
+
+			while (!T.empty()) {
+				tuple<int,int, int> cur = T.front();
+				T.pop();
+				for (int dir = 0; dir < 6; dir++) {
+					int nx = get<0>(cur) + dx[dir];
+					int ny = get<1>(cur) + dy[dir];
+					int nz = get<2>(cur) + dz[dir];
+					
+					if (nx<0 || nx>=h || ny<0 || ny>=n||nz<0||nz>=m) continue;
+					if ( dist[nx][ny][nz]>=0) continue;
+
+
+					dist[nx][ny][nz]= dist[get<0>(cur)][get<1>(cur)][get<2>(cur)] + 1;
+					T.push({ nx,ny,nz });
+
+				}
+			}
+
+	int temp = 0;
+	
+	for (int i = 0; i < h; i++) 
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < m; k++) {
+				if (dist[i][j][k] == -1) {
+					cout << -1;
+					return 0;
+				}
+				temp = max(dist[i][j][k], temp);
+			}
+			
+		}
+	
+	cout << temp;
+
+	return 0;
+
+}
