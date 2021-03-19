@@ -1,0 +1,60 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+
+
+int dist[301][301];
+int visit[301][301];	
+vector<int> v;
+int n;
+
+int dx[8] = {-1, -2, 1,  2, -2, -1, 1, 2};
+int dy[8] = {-2, -1, -2, -1, 1, 2, 2, 1};
+int main() {
+	int t;
+	cin >> t;
+	int x1, y1, x2, y2;
+	for (int i = 0; i < t; i++) {
+	
+		cin >> n;
+		cin >> x1 >> y1 >> x2 >> y2;
+		queue<pair<int, int>> Q;
+		int num = 0;
+		
+		for (int s = 0; s < n; s++) {
+			for (int k = 0; k < n; k++) {
+				dist[s][k] = 0;
+				visit[s][k] = 0;
+			}
+		}
+
+		visit[x1][y1] = 1;
+		Q.push({ x1, y1 });
+
+		 while (!Q.empty()) {
+			auto cur = Q.front();
+			Q.pop();
+			
+			int nx, ny;
+			for (int dir = 0; dir < 8; dir++) {
+				 nx = cur.first + dx[dir];
+				 ny = cur.second + dy[dir];
+				
+
+				if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+				if (visit[nx][ny]) continue;
+
+				visit[nx][ny] = 1;
+				dist[nx][ny] = dist[cur.first][cur.second] + 1;
+				Q.push({ nx,ny });
+	
+			
+			}
+			
+		}
+		 v.push_back(dist[x2][y2]);
+	}
+
+	for (int i = 0; i < v.size(); i++)
+		cout << v[i]<<endl;
+}
