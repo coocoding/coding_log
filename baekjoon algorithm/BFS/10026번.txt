@@ -1,0 +1,95 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+
+char board[101][101];
+int visit[101][101];
+int dx[4] = { -1,0,1,0 };
+int dy[4] = { 0,1,0,-1 };
+bool isColorW = false;
+
+
+void bfs(int x, int y,int n) {
+	
+		queue<pair<int, int>> Q;
+		visit[x][y] = 1;
+		Q.push({ x, y });
+		char rgb = board[x][y];
+		while (!Q.empty()) {
+			auto cur = Q.front();
+			Q.pop();
+			for (int dir = 0; dir < 4; dir++) {
+				int nx = cur.first + dx[dir];
+				int ny = cur.second + dy[dir];
+
+				if (nx<0 || nx>=n || ny<0 || ny>=n) continue;
+				if (visit[nx][ny]) continue;
+				if (isColorW) {
+					if (rgb == 'R') {
+						if (board[nx][ny] == 'B') continue;
+					}
+					else if (rgb == 'G') {
+						if (board[nx][ny] == 'B') continue;
+					}
+					else if (rgb == 'B') {
+						if (board[nx][ny] != rgb) continue;
+					}
+
+				}
+				else {
+					if (board[nx][ny] != rgb) continue;
+				}
+				visit[nx][ny] = 1;
+				Q.push({ nx,ny });
+			}
+
+		}
+	
+	
+}
+
+
+
+int main() {
+	int n;
+	cin >> n;
+	string s;
+
+	for (int i = 0; i < n; i++) {
+		cin >> s;
+		for (int j = 0; j < n; j++) {
+			board[i][j] = s[j];
+		}
+	}
+
+
+
+	int count = 0;
+	for (int i = 0; i < n; i++) 
+		for (int j = 0; j < n; j++) {
+			if (!visit[i][j]) {
+				bfs(i, j, n);
+				count++;
+			}
+		}
+	cout << count<<" ";
+
+	isColorW = true;
+	int area = 0;
+	visit[n][n] = { 0, };
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++) 
+			visit[i][j] = 0;
+		
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++) {
+			if (!visit[i][j]) {
+				bfs(i, j, n);
+				area++;
+			}
+		}
+
+	cout << area;
+}
