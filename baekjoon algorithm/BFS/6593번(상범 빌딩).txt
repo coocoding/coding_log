@@ -1,0 +1,75 @@
+#include<iostream>
+#include<queue>
+#include<tuple>
+using namespace std;
+
+char board[31][31][31];
+int dist[31][31][31];
+
+int dx[6] = { 1,-1,0,0,0,0 };
+int dy[6] = {0,0,1,-1,0,0 };
+int dz[6] = { 0,0,0,0,- 1,1 };
+queue<tuple<int, int, int>> Q;
+
+void init(int l,int r, int c) {
+	for (int i = 0; i < l; i++)
+		for (int j = 0; j < r; j++)
+			for (int k = 0; k < c; k++)
+				dist[i][j][k] = -1;
+}
+void bfs(int l, int r, int c) {
+	
+	while (!Q.empty()) {
+		auto cur = Q.front();
+		Q.pop();
+		for (int dir = 0; dir < 6; dir++) {
+			int nx = get<0>(cur) + dx[dir];
+			int ny = get<1>(cur) + dy[dir];
+			int nz = get<2>(cur) + dz[dir];
+
+			if (nx < 0 || ny < 0 || nz < 0 || nx >=l || ny >= r || nz >= c) continue;
+			if (dist[nx][ny][nz] >= 0 || board[nx][ny][nz] == '#') continue;
+
+			dist[nx][ny][nz] = dist[get<0>(cur)][get<1>(cur)][get<2>(cur)] + 1;
+			Q.push({ nx,ny,nz });
+		}
+
+	}
+
+}
+
+
+
+int main(){
+
+	while (true) {
+		int l, r, c;
+		cin >> l >> r >> c;
+		if (l == 0 && r == 0 && c == 0) break;
+		tuple<int, int, int> end;
+		init(l, r, c);
+
+		for (int i = 0; i < l; i++) {
+			for (int j = 0; j < r; j++) {
+				for (int k = 0; k < c; k++) {
+					cin >> board[i][j][k];
+					if (board[i][j][k] == 'S') {
+						Q.push({ i, j, k });
+						dist[i][j][k] = 0;
+					}
+					if (board[i][j][k] == 'E')
+						end = { i,j,k };
+				}
+			}
+		}
+
+		
+		bfs(l, r, c);
+		if (dist[get<0>(end)][get<1>(end)][get<2>(end)] == -1)
+			cout << "Trapped!" << endl;
+		else
+		cout <<"Escaped in " <<dist[get<0>(end)][get<1>(end)][get<2>(end)] <<" minute(s)."<<endl;
+		
+
+	}
+}
