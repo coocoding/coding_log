@@ -1,0 +1,59 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+
+
+int dist[100001];
+queue<int> Q;
+
+
+void init() {
+	for (int i = 0; i < 100001; i++)
+		dist[i] = -1;
+
+	
+}
+//최단거리는 bfs
+int main() {
+	int n, k;
+	cin >> n >> k;
+	init();
+	Q.push(n);
+	dist[n] = 0;
+	if (n == k) {
+		cout << 0 << endl;
+		return 0;
+	}
+
+	while (!Q.empty()) {
+		int cur = Q.front();
+		Q.pop();
+		if (cur == k) {
+				cout << dist[cur];
+				return 0;
+		}
+		for (int i = 0; i < 3; i++) {
+			int nx;
+			switch (i) {
+			case 0:
+				nx = cur*2; //2배 이동하는 연산을 제일 앞에 둬야함
+				break;
+			case 1:
+				nx = cur -1;
+				break;
+			case 2:
+				nx = cur +1;
+				break;
+			}
+
+			if (nx < 0 || nx>100000) continue;
+			if (dist[nx] >= 0) continue;
+				if (i == 0)
+					dist[nx] = dist[cur];
+				else
+					dist[nx] = dist[cur] + 1;
+			
+			Q.push(nx);
+		}
+	}
+}
