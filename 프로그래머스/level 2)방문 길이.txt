@@ -1,0 +1,42 @@
+#include <string>
+#include<queue>
+#include<map>
+using namespace std;
+
+int dx[]={1,-1,0,0};
+int dy[]={0,0,-1,1};
+int dist[11][11][11][11]; // nx ny curx cury
+int solution(string dirs) {
+    int answer = 0;
+  
+     int nx,ny;
+     int curx=5,cury=5;
+    for(int i=0;i<dirs.size();i++){   
+        switch(dirs[i]){
+            case 'U': 
+                nx=curx+1,ny=cury+0;
+                break;
+            case 'D': 
+                nx=curx-1,ny=cury+0;
+                break;
+            case 'R': 
+                nx=curx+0,ny=cury+1;
+                break;  
+            case 'L': 
+                nx=curx+0,ny=cury-1;
+                break;
+        }
+     
+        if(nx<0||ny<0||nx>=11||ny>=11) continue;
+        if(dist[nx][ny][curx][cury]!=1&&dist[curx][cury][nx][ny]!=1){
+        dist[nx][ny][curx][cury]=1;
+        dist[curx][cury][nx][ny]=1;
+        answer++;
+        }
+        
+        curx=nx;
+        cury=ny;
+    }
+    
+    return answer;
+    }
