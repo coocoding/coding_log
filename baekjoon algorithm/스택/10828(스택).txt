@@ -1,0 +1,57 @@
+#include<iostream>
+#include<sstream>
+#include <iterator>
+#include <vector>
+using namespace std;
+
+#define MAX_STACK_SIZE 10000
+int peek = -1;
+int stack[MAX_STACK_SIZE];
+
+void push(int x) {
+	stack[++peek]=x;
+}
+
+int empty() {
+	return (peek == -1);
+}
+
+int pop() {
+	if (empty()) return -1;
+	return stack[peek--];
+}
+
+int size() {
+	return peek + 1;
+}
+
+int top() {
+	if (empty()) return -1;
+	return stack[peek];
+}
+int main() {
+	int number;
+	cin >> number;
+	for (int i = 0; i < number; i++) {
+		string command;
+		cin >> command;
+
+		if (command == "push") {
+			int num;
+			cin >> num;
+			push(num);
+		}
+		else if (command == "pop") {
+			cout<<pop()<<endl;
+		}
+		else if (command == "size") {
+			cout<<size()<<endl;
+		}
+		else if (command == "empty") {
+			cout<<empty()<<endl;
+		}
+		else if (command == "top") {
+			cout<<top()<<endl;
+		}
+	}
+}
