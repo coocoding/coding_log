@@ -1,0 +1,26 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+
+int main() {
+	int answer = 0;
+	int count;
+	cin >> count;
+	stack <int> price;
+	for (int i = 0; i < count; i++) {
+		int num;
+		cin >> num;
+		if (num == 0) {
+			price.pop();
+		}
+		else
+			price.push(num);
+	}
+
+	while (!price.empty()){
+		answer += price.top();
+		price.pop();
+	}
+
+	cout << answer;
+}
