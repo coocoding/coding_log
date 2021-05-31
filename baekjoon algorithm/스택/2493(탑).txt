@@ -1,0 +1,41 @@
+#include<iostream>
+#include<stack>
+#include<vector>
+using namespace std;
+
+int main() {
+	int count;
+	cin >> count;
+	vector<int> answer;
+	stack<pair<int,int>> stack;
+	for (int i = 0; i < count; i++) {
+		int num;
+		cin >> num;
+		int top_num;
+		if (stack.empty()) {
+			stack.push(make_pair(num, i));
+			answer.push_back(0);
+		}
+
+		else {
+			while (!stack.empty()) {
+				top_num = stack.top().first;
+				if (num <= top_num) {
+					answer.push_back(stack.top().second + 1);
+					stack.push(make_pair(num, i));
+					break;
+				}
+				else {
+					stack.pop();
+					if (stack.empty()) {
+						stack.push(make_pair(num, i));
+						answer.push_back(0);
+						break;
+					}
+				}
+			}
+		}
+	}
+	for (int i = 0; i < answer.size(); i++)
+		cout << answer[i] << ' ';
+}
