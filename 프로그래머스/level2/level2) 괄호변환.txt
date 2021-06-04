@@ -1,0 +1,65 @@
+#include <string>
+#include <vector>
+#include <stack>
+using namespace std; 
+int check_right(string u){
+    stack<char> stack;
+    for(int i=0;i<u.size();i++){
+        if(u[i]=='(')
+            stack.push('(');
+        else{ 
+            if(stack.empty())
+                return 0;
+            stack.pop();
+        }
+    }
+    return 1;
+    
+}
+string check_balance(string p){
+    if(p=="")
+        return "";
+    
+    string u="";
+    string v="";
+    int num=0,i;
+    
+    for(i=0;i<p.size();i++){
+        if(p[i]=='('){
+            num++;
+        }
+        else if(p[i]==')'){
+            num--;
+        }
+         u+=p[i];
+        if(num==0)
+            break;
+    }
+    for(int j=i+1;j<p.size();j++)
+        v+=p[j];
+    
+ 
+    if(check_right(u)){
+         v=check_balance(v);
+         return u+v;    
+    }
+    else{
+        string temp="";
+        temp+='(';
+        temp+=check_balance(v);
+        temp+=')';
+        for(int i=1;i<u.size()-1;i++){
+            if(u[i]=='(')
+                temp+=')';
+            else if(u[i]==')')
+                temp+='(';
+        }
+        return temp;
+    } 
+}
+
+string solution(string p) {
+    string answer = "";
+    answer=check_balance(p);
+    return answer;
+}
