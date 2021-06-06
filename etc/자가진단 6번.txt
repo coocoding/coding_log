@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+
+const int MAX = 100;
+int main() {
+	int arr[5] = { 3,5,7,9,1 };
+	int temp[MAX] = { 0, };
+	int answer[MAX];
+	int size = sizeof(arr) / sizeof(int);
+	for (int i = 0; i < size; i++) {
+		temp[arr[i]]++;
+	}
+	answer[0] = -1;
+	for (int i = 0; i < size; i++) {
+		if (temp[i]>1) {
+			answer[i] = temp[i];
+			cout << answer[i] << " ";
+		}
+	}
+	if (answer[0] == -1) {
+		cout << -1 << endl;
+	}
+
+}
