@@ -1,0 +1,45 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n, vector<int> lost, vector<int> reserve) {
+    int answer = 0;
+    int temp[30]={0,};
+    //다 체육복을 가지고 있다고 체크
+    for(int i=0;i<n;i++)
+        temp[i]=1;
+    //여분 체육복 체크
+    for(int i=0;i<reserve.size();i++)
+        temp[reserve[i]-1]++;
+    //잃어버린 체육복 체크 
+    for(int i=0;i<lost.size();i++)
+        temp[lost[i]-1]--;
+    
+    for(int i=0;i<n;i++){
+           
+            if(temp[i]>0){
+                temp[i]--;
+                answer++;
+            }
+            else if(temp[i]==0){
+                //첫번째 경우 제외하고 체크 
+                if(i!=0){
+                    if(temp[i-1]>=1){
+                        temp[i-1]--;
+                        answer++;
+                        continue;
+                     }
+                }
+                //마지막 경우 제외하고 체크 
+                if(i!=n-1){
+                     if(temp[i+1]>1){
+                      temp[i+1]--;
+                     answer++;
+             
+                    } 
+                 }
+            }
+    }
+    return answer;
+}
