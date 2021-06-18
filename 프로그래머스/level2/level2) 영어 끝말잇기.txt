@@ -1,0 +1,40 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+
+vector<int> solution(int n, vector<string> words) {
+    vector<int> answer;
+    char first;
+    char last=words[0][words[0].size()-1];
+    unordered_map <string,int> strMap;
+    strMap.insert(make_pair(words[0],1));
+    bool isanswer=0;
+    for(int i=1;i<words.size();i++){
+        first=words[i][0];
+        if(first!=last){
+            answer.push_back(i%n+1);
+            answer.push_back(i/n+1);
+            isanswer=1;
+            break;
+        }
+        last=words[i][words[i].size()-1];
+
+        if(strMap.end()==strMap.find(words[i]))
+           strMap.insert(make_pair(words[i],1));
+        else{
+            answer.push_back(i%n+1);
+            answer.push_back(i/n+1);
+            isanswer=1;
+            break;
+        }   
+    }
+
+    if(!isanswer){
+        answer.push_back(0);
+        answer.push_back(0);
+    }
+
+    return answer;
+}
