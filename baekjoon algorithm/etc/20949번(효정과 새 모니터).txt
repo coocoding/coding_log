@@ -1,0 +1,34 @@
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<algorithm>
+using namespace std;
+double PPI(int w, int h) {
+	return	sqrt((w*w + h*h))/ 77;
+}
+
+bool compare(pair<double,int> a,pair<double,int> b) {
+	if (a.first < b.first) 
+		return true;
+	else if (a.first>b.first)
+		return false;
+	else if (a.first == b.first)
+		return a.second > b.second;
+}
+int main() {
+	int n, w, h;
+	vector<pair<double,int>> v;
+	
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> w;
+		cin >> h;
+		double temp=PPI(w, h);
+		v.push_back(make_pair(temp,i+1));
+		
+	}
+	
+	sort(v.begin(), v.end(),compare);
+	for(int i=v.size()-1;i>=0;i--)
+		cout<<v[i].second<<endl;
+}
