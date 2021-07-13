@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+
+int cal(int num) {
+	int num1 = num % 10;
+	num /= 10; 
+	int num2 = num % 10;
+	num /= 10;
+	int num3 = num % 10;
+
+	if (num2 - num1 != num3 - num2)
+		return 0;
+
+	return 1;
+}
+int main() {
+	int n;
+	cin >> n;
+	if (n < 100) {
+		cout << n;
+		return 0;
+	}
+	int sum = 99;
+	for (int i = 100; i <= n; i++) {
+		sum+=cal(i);
+	}
+	if (n == 1000)
+		sum--;
+	cout << sum;
+
+}
