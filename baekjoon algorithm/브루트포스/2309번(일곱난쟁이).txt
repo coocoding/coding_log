@@ -1,0 +1,38 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	vector<int> person;
+
+	for (int i = 0; i < 9; i++) {
+		int num;
+		cin >> num;
+		person.push_back(num);
+	}
+	sort(person.begin(), person.end());
+
+	for (int i = 0; i < 9; i++) 
+		for (int j = i + 1; j < 9; j++) {
+			int sum = 0;
+			for (int k = 0; k < 9; k++) {
+				if (k == i || k == j)
+					continue;
+				sum += person[k];
+			}
+			if (sum == 100) {
+				for (int t = 0; t< 9; t++) {
+					if (t == i || t == j)
+						continue;
+					cout << person[t] << endl;
+				}
+				/*return 0을 안써주니까 여러가지인 경우 여러번 출력되서 
+				계속 92%에서 오류가 났다.*/
+				
+				return 0;
+			}
+		}
+	
+	
+}
