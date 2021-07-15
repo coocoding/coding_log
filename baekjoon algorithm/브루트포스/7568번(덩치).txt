@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<pair<int, int>> person;
+	vector<int> answer;
+	for (int i = 0; i < n; i++) {
+		int weight;
+		cin >> weight;
+		int height;
+		cin >> height;
+		person.push_back(make_pair(weight,height));
+	}
+
+	for (int i = 0; i < n; i++) {
+		int temp = 0;
+		for (int j = 0; j < n; j++) {
+			if (i == j) continue;
+			if (person[i].first < person[j].first) {
+				if (person[i].second < person[j].second)
+					temp++;
+			}
+			
+		}
+		answer.push_back(temp + 1);
+	}
+	for (int i = 0; i < answer.size(); i++)
+		cout << answer[i] << endl;
