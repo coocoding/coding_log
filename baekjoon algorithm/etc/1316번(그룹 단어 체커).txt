@@ -1,0 +1,27 @@
+#include<iostream>
+using namespace std;
+
+int check(string s) {
+	int alpha[28] = { 0, };
+	alpha[s[0]-'a'] = 1;
+	for (int i = 0; i < s.size()-1; i++) {
+		if (s[i] != s[i + 1]) {
+			if (alpha[s[i + 1]-'a'])
+				return 0;
+			alpha[s[i + 1]-'a'] = 1;
+		}
+	}
+	return 1;
+}
+int main() {
+	int n;
+	int answer = 0;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		string s;
+		cin >> s;
+		answer += check(s);
+	}
+	cout << answer;
+}
