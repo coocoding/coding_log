@@ -1,0 +1,39 @@
+#include<iostream>
+#include<unordered_map>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	unordered_map<string, int> map;
+	vector<string> books;
+	int cnt;
+	cin >> cnt;
+	for (int i = 0; i < cnt; i++) {
+		string book;
+		cin >> book;
+		books.push_back(book);
+		if (map.find(book) != map.end())
+			map[book]++;
+		else
+			map.insert({book,1});
+
+		
+	}
+	int max = 0;
+	string answer = "";
+	for (auto n : books) {
+		if (map[n] > max) {
+			answer = n;
+			max = map[n];
+		}
+		else if (map[n] == max) {
+			vector<string> v;
+			v.push_back(n);
+			v.push_back(answer);
+			sort(v.begin(), v.end());
+			answer = v[0];
+		}
+	}
+	cout << answer;
+}
