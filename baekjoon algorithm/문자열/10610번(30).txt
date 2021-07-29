@@ -1,0 +1,27 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	string s;
+	cin >> s;
+
+	long long num = 0;
+	bool check = false;
+	for (int i = 0; i < s.size(); i++) {
+		if (s[i] - '0' == 0)
+			check = true;
+		num += (s[i] - '0');
+	}
+	if (num % 3 != 0 || !check) {
+		cout << -1 << '\n';
+
+	}
+	else {
+		sort(s.begin(), s.end(), greater<int>());
+		cout << s << '\n';
+	}
+	return 0;
+}
