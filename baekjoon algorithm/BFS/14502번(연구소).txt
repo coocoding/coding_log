@@ -1,0 +1,82 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+
+int vx, vy;
+int n, m;
+int result;
+int dx[4] = { 1,0, -1,0 };
+int dy[4] = { 0,1,0,-1 };
+int board[9][9];
+int temp[9][9];
+
+void BFS() {
+	int new_board[9][9];
+	queue<pair<int, int>> Q;
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++) {
+			new_board[i][j] = temp[i][j];
+			if (new_board[i][j] == 2)
+				Q.push({ i,j });	
+		}
+
+	while(!Q.empty()){
+		auto cur = Q.front();
+		Q.pop();
+		for (int i = 0; i < 4; i++){
+			int nx = cur.first + dx[i];
+			int ny =cur.second+dy[i];
+			if (nx < 0 || ny < 0 || nx >= n|| ny >= m) continue;
+			if (new_board[nx][ny]!=0) continue;
+			new_board[nx][ny] = 2;
+			Q.push({ nx,ny });
+		}
+	}
+	int count = 0;
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+			if (new_board[i][j] == 0)
+				count++;
+
+	result = max(count, result);
+}
+void makeWall(int cnt) {
+	if (cnt == 3) {
+		BFS();
+		return;
+	}
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++) {
+			if (temp[i][j] == 0) {
+				temp[i][j] = 1;
+				makeWall(cnt + 1);
+				temp[i][j] = 0;
+			}
+		}
+}
+int main() {
+	cin >> n >> m;
+
+	for(int i=0;i<n;i++)
+		for (int j = 0; j < m; j++) {
+			cin>>board[i][j];
+		}
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++) {
+			if (board[i][j] == 0) {
+
+				for(int k=0;k<n;k++)
+					for (int l = 0; l < m; l++) 
+						temp[k][l] = board[k][l];
+
+				temp[i][j] = 1;
+				makeWall(1);
+				temp[i][j] = 0;
+					
+			}
+		}
+
+	cout << result;
+	return 0;
+}
