@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+
+void init() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+}
+
+int main() {
+	init();
+	int dp[100000];
+	dp[0] = 0;
+	int n,m;
+	cin >> n>>m;
+	int now;
+	for (int i = 1; i <=n; i++) {
+		cin >> now;
+		dp[i] = dp[i - 1] + now;
+	}
+	while (m > 0) {
+		int start, end;
+		cin >> start >> end;
+		cout << dp[end] - dp[start - 1]<<'\n';
+		m--;
+	}
+}
