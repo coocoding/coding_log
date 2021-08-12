@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(string number, int k){
+    string answer = "";
+    int limit=number.size()-k;
+    int now=0;
+    int index=0;
+    int count=0;
+    while(count<limit){
+        int max=0;
+        for(int i=now;i<=k;i++){
+            if(max<number[i]){
+                max=number[i];
+                now=i;
+            }
+        }
+            
+        k++;
+        now++;
+        answer+=max;
+        count++;
+    }
+    return answer;
+}
