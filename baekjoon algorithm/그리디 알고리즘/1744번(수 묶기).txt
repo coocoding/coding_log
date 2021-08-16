@@ -1,0 +1,61 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> plus;
+	vector<int> minus;
+	int zero = 0;
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		int num;
+		cin >> num;
+		if (num > 0) {
+			if (num == 1)
+				sum++;
+			else
+				plus.push_back(num);
+		}
+		else {
+			if (num < 0)
+				minus.push_back(num);
+			else
+				zero++;
+		}
+	}
+	
+	sort(plus.begin(), plus.end());
+	sort(minus.begin(), minus.end(),greater<int>());
+
+	int plus_size = plus.size();
+	int minus_size = minus.size();
+
+	// 양수 
+	if (plus_size % 2 != 0) 
+		sum += plus[0];
+	
+	for (int i = plus.size() - 1; i > 0; i -= 2) {
+		sum += plus[i] * plus[i-1];
+	}
+	
+	//음수
+	if (minus_size % 2 != 0) {
+		if (zero > 0)
+			zero--;
+		else
+			sum += minus[0];
+	}
+
+	for (int i = minus.size() - 1; i > 0; i -= 2) {
+		sum += minus[i] * minus[i -1];
+	}
+		
+	
+
+	cout<<sum<<'\n';
+
+	return 0;
+}
