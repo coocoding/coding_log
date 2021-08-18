@@ -1,0 +1,31 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int dp[15] = { 0, };
+int main() {
+	vector<pair<int,int>> v;
+	int n;
+	cin >> n;
+	int day = n;
+	int last_day = n;
+	v.push_back({ 0,0 });
+	while (n > 0) {
+		int n1, n2;
+		cin >> n1 >> n2;
+		v.push_back({ n1,n2 });
+		n--;
+	}
+	
+	
+	for (int i = v.size()-1; i > 0; i--) {
+		if (v[i].first + day > last_day + 1)
+			dp[i] = dp[i + 1];
+		else {
+			dp[i] = max(dp[i + 1], (v[i].second + dp[day + v[i].first]));
+		}
+		day--;
+	}
+	cout << dp[1];
+
+}
