@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>
+#include<tuple>
+#include<algorithm>
+
+using namespace std;
+int t_size[10000];
+
+bool compare(tuple<int,int,int> n1,tuple<int,int,int> n2){
+	if (get<1>(n1) == get<1>(n2)) return get<0>(n1) < get<0>(n2);
+	return get<1>(n1) < get<1>(n2);
+
+}
+int main() {
+	int n, c, m;
+	cin >> n >> c >> m;
+	vector<tuple<int, int, int>> t;
+	
+	for (int i = 0; i < m; i++) {
+		int n1, n2, n3;
+		cin >> n1 >> n2 >> n3;
+		t.push_back({ n1,n2,n3 });
+	}
+	sort(t.begin(), t.end(),compare);
+
+	int result = 0;
+	for (int i = 0; i < m; i++) {
+		int max1 = 0;
+		for (int j = get<0>(t[i]); j < get<1>(t[i]); j++) {
+			max1 = max(max1, t_size[j]);
+		}
+		int temp = min(get<2>(t[i]), c - max1);
+		result += temp;
+
+		for (int j = get<0>(t[i]); j < get<1>(t[i]); j++) 
+			t_size[j] += temp;
+	}
+
+	cout << result << '\n';
+
+}
