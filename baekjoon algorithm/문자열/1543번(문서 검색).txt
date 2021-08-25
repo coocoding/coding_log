@@ -1,0 +1,23 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+
+int main(){
+	string sen;
+	getline(cin, sen);
+	string key;
+	getline(cin, key);
+
+	int count = 0;
+	int result = 0;
+	while(result!=-1){
+		result = sen.find(key);
+		if(result!=-1){
+			sen.replace(result, key.size(), "#");
+			count++;
+		}
+	}
+	cout << count;
+}
