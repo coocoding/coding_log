@@ -1,0 +1,42 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int n;
+int arr[8];
+int check[8];
+int maxValue=0;
+int order[8];
+void cal() {
+	int result = 0;
+	for (int i = 0; i < n - 1; i++) {
+		if(check[i]==1)
+			result += abs(order[i] - order[i + 1]);
+	}
+	maxValue = max(maxValue, result);
+	
+}
+
+void dfs(int index,int count) {
+	if (count == n) {
+		cal();
+		return;
+	}
+	for (int i = 0; i < n; i++) {
+		if (check[i] == 1) continue;
+		check[i] = 1;
+		order[count] = arr[i];
+		dfs(i, count + 1);
+		check[i] = 0;
+	}
+
+}
+int main() {
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	dfs(0,0);
+
+	cout << maxValue;
+}
