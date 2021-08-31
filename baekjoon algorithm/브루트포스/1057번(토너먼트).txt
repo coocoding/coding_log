@@ -1,0 +1,23 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main() {
+	int n, person1, person2;
+	cin >> n >> person1 >> person2;
+	int cnt = 0;
+	while (person1!=person2) {
+		if (person1 % 2 == 0)
+			person1 = person1 / 2;
+		else
+			person1 = person1 / 2 + 1;
+
+		if (person2 % 2 == 0)
+			person2 = person2 / 2;
+		else
+			person2 = person2 / 2 + 1;
+
+		cnt++;
+	}
+	cout << cnt;
+}
