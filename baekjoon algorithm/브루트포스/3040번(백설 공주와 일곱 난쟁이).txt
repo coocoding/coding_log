@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+
+int d[9];
+int pick[9];
+bool isSelected[9];
+
+void cal() {
+	int sum = 0;
+	for (int i = 0; i < 7; i++) 
+		sum += pick[i];
+	
+	if (sum == 100) {
+		for (int i = 0; i < 7; i++)
+			cout << pick[i] << '\n';
+	}
+}
+void dfs(int cnt) {
+	if (cnt == 7) {
+		cal();
+		return;
+	}
+	for (int i = 0; i < 9; i++) {
+		if (isSelected[i]) continue;
+		isSelected[i] = true;
+		pick[cnt] = d[i];
+		dfs(cnt + 1);
+		isSelected[i] = false;
+	}
+}
+int main(){
+
+	for (int i=0; i < 9; i++)
+		cin >> d[i];
+
+	dfs(0);
+}
