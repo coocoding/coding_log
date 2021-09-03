@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+
+int T[1001];
+
+void init() {
+
+	T[0] = 0;
+	for (int i = 1; T[i] <= 1000; i++)
+		T[i] = T[i - 1] + i;
+}
+
+bool cal(int max) {
+	for (int i = 1; i < 50; i++) {
+		for (int j = 1; j < 50; j++) {
+			for (int k = 1; k < 50; k++) {
+				if (T[i] + T[j] + T[k] == max)
+					return true;
+			}
+		}
+	}
+	return false;
+}
+int main(){
+	init();
+	int n;
+	cin >> n;
+	while(n > 0){
+		int temp;
+		cin >> temp;
+		if (cal(temp))
+			cout << 1 << '\n';
+		else
+			cout << 0 << '\n';
+		n--;
+	}
+}
