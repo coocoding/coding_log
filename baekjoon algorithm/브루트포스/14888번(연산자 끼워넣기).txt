@@ -1,0 +1,63 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+int op[10];
+int use[12];
+int num[12];
+int n;
+long long min_answer=1000000000;
+long long  max_answer = -1000000000;
+void cal() {
+	long long temp=num[0];
+	for (int i = 0; i < n-1; i++) {
+		if (use[i] == 0) 
+			temp = temp + num[i + 1];
+		else if (use[i] == 1)
+			temp = temp - num[i + 1];
+		else if (use[i] == 2)
+			temp = temp *num[i + 1];
+		else if (use[i] == 3) {
+			if (temp < 0) {
+				temp = -temp;
+				temp = temp / num[i + 1];
+				temp = -temp;
+				continue;
+			}
+			temp = temp /num[i + 1];	
+		}
+				
+	}
+	min_answer = min(min_answer, temp);
+	max_answer = max(max_answer, temp);
+}
+void dfs(int cnt) {
+	if (cnt == n-1) {
+		cal();
+		return;
+	}
+	for (int i = 0; i < 4; i++) {
+		if (op[i] > 0) {
+			op[i]--;
+			use[cnt] = i;
+			dfs(cnt + 1);
+			op[i]++;
+		}
+	}
+}
+int main() {
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> num[i];
+	}
+	for (int i = 0; i < 4; i++) {
+		cin >> op[i];
+	}
+	dfs(0);
+
+	cout << max_answer << '\n';
+	cout <<min_answer;
+	return 0;
+}
