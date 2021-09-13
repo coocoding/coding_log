@@ -1,0 +1,57 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+int number[11];
+int use[11];
+bool isSelect[11];
+int n;
+
+char array1[11];
+vector<string> answer;
+vector<char> c;
+bool cal() {
+	for (int i = 0; i < n; i++) {
+		if (array1[i] == '<') {
+			if (use[i] > use[i + 1]) return false;
+		}
+		else {
+			if (use[i] < use[i + 1]) return false;
+		}
+	}
+	return true;
+}
+void dfs(int cnt) {
+	if (cnt == n + 1) {
+		string temp = "";
+		if (cal()) {
+			for (int i = 0; i < n+1; i++)
+				temp = temp + to_string(use[i]);
+			answer.push_back(temp);
+		}
+		return;
+	}
+	for (int i = 0; i < 10; i++) {
+		if (isSelect[i]) continue;
+		isSelect[i] = true;
+		use[cnt] = number[i];
+		dfs(cnt + 1);
+		isSelect[i] = false;
+	}
+}
+int main() {
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> array1[i];
+	}
+	for (int i = 1; i < 10; i++) {
+		number[i] = i;
+	}
+	dfs(0);
+
+	sort(answer.begin(), answer.end());
+	cout << answer[answer.size() - 1] << '\n';
+	cout << answer[0];
+}
