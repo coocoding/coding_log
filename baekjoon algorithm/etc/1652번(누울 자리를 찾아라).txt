@@ -1,0 +1,56 @@
+#include<iostream>
+using namespace std;
+
+
+int room[101][101];
+int main() {
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			char ch;
+			cin >> ch;
+			if (ch == 'X')
+				room[i][j] = 1;
+			else
+				room[i][j] = 0;
+		}
+	}
+	int len = 0;
+	int cnt = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (room[i][j]) {
+				if (len >= 2) {
+					cnt++;
+				}
+				len = 0;
+				continue;
+			}
+			len++;
+		}
+		if (len >= 2) cnt++;
+		len = 0;
+		
+	}
+	cout << cnt<<' ';
+	cnt = 0;
+	len = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (room[j][i]) {
+				if (len >= 2) {
+			
+					
+					cnt++;
+				}
+				len = 0;
+				continue;
+			}
+			len++;
+		}
+		if (len >= 2) cnt++;
+		len = 0;
+	}
+	cout << cnt;
+}
