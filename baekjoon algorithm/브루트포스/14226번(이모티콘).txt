@@ -1,0 +1,41 @@
+#include<iostream>
+#include<queue>
+#include<tuple>
+using namespace std;
+
+int main() {
+	int s;
+	cin >> s;
+	queue<tuple<int,int,int>> Q;
+	Q.push({1,0,0});
+	bool isVisited[1001][1001] = { 0, };
+	isVisited[1][0] = true;
+    //방문 확인 안 해주면 메모리 초과가 나온다.
+
+	while (!Q.empty()) {
+		int cur = get<0>(Q.front());
+		int board = get<1>(Q.front());
+		int time = get<2>(Q.front());
+		Q.pop();
+		if (cur == s) {
+			cout << time;
+			break;
+		}
+		if (0<cur && cur<1001) {
+
+			if (!isVisited[cur][cur]) {
+				isVisited[cur][cur] = true;
+				Q.push({ cur,cur,time + 1 });
+			}
+			if (!isVisited[cur + board][board] && board > 0 && board + cur < 1001) {
+				isVisited[cur + board][board] = true;
+				Q.push({ cur + board,board,time + 1 });
+			}
+			if (!isVisited[cur - 1][board]) {
+				isVisited[cur - 1][board] = true;
+				Q.push({ cur - 1,board,time + 1 });
+			}
+		}
+	}
+	
+}
