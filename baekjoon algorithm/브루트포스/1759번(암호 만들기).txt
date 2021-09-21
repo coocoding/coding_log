@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+bool isSelected[16];
+vector<pair<char,int>>alpha;
+vector<pair<char, int>>selected;
+int L, C;
+
+bool check() {
+	int a = 0;
+	int b = 0;
+	for (int i = 0; i < L; i++) {
+		if (selected[i].second) b++;
+		else a++;
+	}
+	if (a >= 1 && b >= 2) return true;
+	else return false;
+
+}
+void cal() {
+	for (int i = 0; i < L; i++) {
+		cout << selected[i].first;
+	}
+	cout << '\n';
+}
+void dfs(int cnt) {
+	if (cnt == L) {
+		if(selected[cnt - 1].first > selected[cnt].first)
+		if(check())
+			cal();
+		return;
+	}
+	for (int i = 0; i < C; i++) {
+		if (isSelected[i]) continue;
+		if(cnt!=0)
+			if (selected[cnt - 1].first > alpha[i].first) continue;
+		isSelected[i] = true;
+		selected[cnt].first = alpha[i].first;
+		selected[cnt].second= alpha[i].second;
+		dfs(cnt + 1);
+		isSelected[i] = false;
+	}
+}
+int main() {
+	cin >> L >> C;
+	for (int i = 0; i < C; i++) {
+		char temp;
+		cin >> temp;
+		if (temp == 'a' || temp == 'e' || temp == 'i' || temp == 'o' || temp == 'u')
+			alpha.push_back({ temp,0 });
+		else
+			alpha.push_back({ temp,1 });
+		selected.push_back({ 0,0 });
+	}
+	sort(alpha.begin(), alpha.end());
+	dfs(0);
+}
