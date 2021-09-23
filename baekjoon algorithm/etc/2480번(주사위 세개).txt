@@ -1,0 +1,26 @@
+#include<iostream>
+#include<queue>
+#include<tuple>
+using namespace std;
+
+int main() {
+	int one, two, three;
+	cin >> one >> two >> three;
+
+	int result;
+	if (one == two && two == three)
+		result = 10000 + one * 1000;
+	else if (one == three || one == two)
+		result = 1000 + one * 100;
+	else if(two==three)
+		result = 1000 + two * 100;
+	else {
+        int m=max(one,two);
+        m=max(m,three);
+		result =  m * 100;
+    }
+		
+	
+    cout << result;
+
+}
