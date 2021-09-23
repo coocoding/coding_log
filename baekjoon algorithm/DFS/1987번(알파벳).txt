@@ -1,0 +1,34 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+char board[21][21];
+int isVisited[26];
+int r, c;
+int answer = 0;
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+void dfs(int x,int y,int cnt) {
+
+	answer = max(answer, cnt);
+	for (int i = 0; i < 4; i++) {
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+		if (nx<0 || nx>=r || ny<0 || ny>=c) continue;
+		if (isVisited[board[nx][ny]-'A']) continue;
+		isVisited[board[nx][ny] - 'A'] = 1;
+		dfs(nx, ny, cnt + 1);
+		isVisited[board[nx][ny] - 'A'] = 0;
+	}
+}
+int main(){
+	cin >> r >> c;
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++)
+			cin >> board[i][j];
+	}
+	isVisited[board[0][0] - 'A'] = 1;
+	dfs(0,0,1);
+	cout << answer;
+}
