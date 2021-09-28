@@ -1,0 +1,88 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+
+int board[101][101];
+int isVisited[101][101];
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+int n;
+void make_zero() {
+	for (int i = 0; i < n; i++) 
+		for (int j = 0; j < n; j++) 
+			isVisited[i][j] = 0; 
+}
+
+int bfs(int cnt) {
+	queue<pair<int, int>> Q;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (board[i][j] == cnt)
+				Q.push({ i,j });
+
+		}
+	}
+	int result = 0;
+	while (!Q.empty()) {
+		
+		int q_size = Q.size();
+
+		for (int i = 0; i < q_size; i++) {
+			pair<int, int> cur = Q.front();
+			Q.pop();
+			for (int i = 0; i < 4; i++) {
+				int nx = cur.second + dx[i];
+				int ny = cur.first + dy[i];
+
+				if (nx<0 || ny<0 || nx>=n || ny>=n) continue;
+				if (board[ny][nx] && board[ny][nx] != cnt) {
+				
+					return result;
+				
+				}
+				else if (!isVisited[ny][nx] && !board[ny][nx]) {
+					isVisited[ny][nx] = 1;
+					Q.push({ ny,nx });
+				}
+			}
+			
+		}
+		result++;
+	}
+}
+
+void dfs(int y, int x, int cnt) {
+	isVisited[y][x] = 1;
+	board[y][x] = cnt;
+	for (int i = 0; i < 4; i++) {
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+		if (nx<0 || ny<0 || nx>=n || ny>=n) continue;
+		if (board[ny][nx]&&!isVisited[ny][nx])
+			dfs(ny, nx, cnt);
+	}
+
+}
+int main() {
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> board[i][j];
+		}
+	}
+	int cnt = 1;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (board[i][j] && !isVisited[i][j])
+				dfs(i,j, cnt++);
+		}
+	}
+	int result = 100000000000;
+	for (int i = 1; i < cnt; i++) {
+		make_zero();
+		result = min(result, bfs(i));
+	}
+	cout << result << '\n';
+
+}
