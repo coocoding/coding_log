@@ -1,0 +1,45 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+int num[100001];
+bool visited[100001];
+bool finished[100001];
+int cnt;
+
+void init() {
+	memset(visited, false, sizeof(visited));
+	memset(finished, false, sizeof(finished));
+}
+void DFS(int x) {
+	visited[x] = true;
+	int next = num[x];
+	
+	if (!visited[next])
+		DFS(next);
+	else if (!finished[next]) {
+		for (int i =next; i != x; i = num[i]) {
+			cnt++;
+		}
+		cnt++;
+	}
+	finished[x] = true;
+}
+int main() {
+	int t;
+	cin >> t;
+	while (t > 0) {
+		int n;
+		cin >> n;
+		init();
+		for(int i=1;i<=n;i++)
+			cin >> num[i];
+		cnt = 0;
+		for (int i = 1; i <= n; i++) {
+			if (!visited[i])
+				DFS(i);
+		}
+		cout << n - cnt<<'\n';
+		t--;
+	}
+}
