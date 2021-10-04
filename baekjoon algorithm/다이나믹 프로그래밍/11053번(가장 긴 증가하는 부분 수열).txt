@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+	int n;
+	int board[1001];
+	int dp[1001];
+	cin >> n;
+	int answer = 1;
+	for (int i = 0; i < n; i++)
+		cin >> board[i];
+	for (int i = 0; i < n; i++)
+		dp[i] = 1;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < i; j++) {
+			if (board[i] > board[j])
+				dp[i] = max(dp[i], dp[j] + 1);
+		}
+		answer = max(answer, dp[i]);
+	}
+	cout << answer;
+
+	return 0;
+}
