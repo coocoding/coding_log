@@ -1,0 +1,77 @@
+#include<iostream>
+#include<queue>
+#include<cstring>
+using namespace std;
+
+int board[301][301];
+int box[301][301];
+bool isVisited[301][301];
+int dx[4] = { 0,1,0,-1 };
+int dy[4] = { 1,0,-1,0 };
+int n, m;
+queue<pair<int, int>> Q;
+void DFS(int x, int y) {
+	isVisited[x][y] = true;
+	for (int i = 0; i < 4; i++) {
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+		if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+		if (board[nx][ny] > 0 && !isVisited[nx][ny])
+			DFS(nx, ny);
+	}
+
+}
+void BFS() {
+	while (!Q.empty()) {
+		auto cur = Q.front();
+		Q.pop();
+		for (int i = 0; i < 4; i++) {
+			int nx = cur.first + dx[i];
+			int ny = cur.second + dy[i];
+			if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+			if (board[nx][ny] <= 0) {
+				box[cur.first][cur.second]++;
+			}
+		}
+	}
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++) {
+			board[i][j] -= box[i][j];
+			if (board[i][j] > 0)
+				Q.push({ i,j });
+		}
+
+}
+int main() {
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cin >> board[i][j];
+			if (board[i][j]) {
+				Q.push({ i,j });
+			}
+		}
+	}
+
+	int cnt = 1;
+	while (true) {
+		memset(isVisited, false, sizeof(isVisited));
+		memset(box, 0, sizeof(box));
+		BFS();
+		int c = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (!isVisited[i][j] && board[i][j] > 0) {
+					DFS(i, j);
+					c++;
+				}
+				if (c == 2) { cout << cnt; return 0; }
+			}
+		}
+        // 시간 초과인 경우를 꼭 처리해줘야 한다.
+        //이거 때문에 게속 오류가 났다.
+		if (c == 0) { cout << 0; return 0; }
+		cnt++;
+	}
+
+}
