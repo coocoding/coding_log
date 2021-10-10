@@ -1,0 +1,64 @@
+#include <string>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+vector<string> solution(vector<string> record) {
+    vector<string> answer;
+    vector<string> n;
+    vector<int> num;
+    unordered_map<string,string> nick_map;
+    for(int i=0;i<record.size();i++){
+        if(record[i][0]=='E'){
+            int cnt=6;
+            string name="";
+            while(true){
+                if(record[i][cnt]==' ')
+                    break;
+                name+=record[i][cnt];
+                cnt++;
+            }
+            string nick="";
+            for(int j=cnt+1;j<record[i].size();j++)
+                nick+=record[i][j];
+            if(nick_map.find(name)!=nick_map.end())
+                nick_map[name]=nick;
+            else
+                nick_map.insert(make_pair(name,nick));
+            n.push_back(name);
+            num.push_back(0);
+
+        }
+        else if(record[i][0]=='C'){
+            int cnt=7;
+            string name="";
+            while(true){
+                if(record[i][cnt]==' ')
+                    break;
+                name+=record[i][cnt];
+                cnt++;
+            }
+            string nick="";
+            for(int j=cnt+1;j<record[i].size();j++)
+                nick+=record[i][j];
+
+            nick_map[name]=nick;
+
+        }
+        else {
+            string name="";
+            for(int j=6;j<record[i].size();j++)
+                name+=record[i][j];
+            n.push_back(name);
+            num.push_back(1);
+        }
+
+    }
+    for(int i=0;i<num.size();i++){
+        if(num[i]==0)
+            answer.push_back(nick_map[n[i]]+"님이 "+"들어왔습니다.");
+        else
+            answer.push_back(nick_map[n[i]]+"님이 "+"나갔습니다.");
+    }
+    return answer;
+}
