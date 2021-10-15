@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+	int n, k;
+	int women[7] = { 0, };
+	int men[7] = { 0, };
+	cin >> n >> k;
+	while (n > 0) {
+		int a, b;
+		cin >> a >> b;
+		if (a == 0)
+			women[b]++;
+		else
+			men[b]++;
+		n--;
+	}
+	int cnt = 0;
+	for (int i = 1; i < 7; i++) {
+		while (women[i] > 0) {
+			women[i] -= k;
+			cnt++;
+		}
+		while (men[i] > 0) {
+			men[i] -= k;
+			cnt++;
+		}
+	}
+	cout << cnt;
+}
