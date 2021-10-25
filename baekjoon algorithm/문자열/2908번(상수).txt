@@ -1,0 +1,22 @@
+#include<iostream>
+#include<string>
+#include<cmath>
+using namespace std;
+
+int main() {
+	string n1, n2;
+	cin >> n1 >> n2;
+
+	int num1=0, num2=0;
+	int j=2, k = 2;
+	for (int i = n1.size()-1; i >= 0; i--) {
+		num1 += (n1[i]-'0')*pow(10,j);
+		j--;
+	}
+	for (int i = n2.size()-1; i >= 0; i--) {
+		num2 += (n2[i]-'0') * pow(10, k);
+		k--;
+	}
+	int result = num1 > num2 ? num1 : num2;
+	cout << result;
+}
